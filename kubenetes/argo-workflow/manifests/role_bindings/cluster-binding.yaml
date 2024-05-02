@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: argo-server-rolebinding
+subjects:
+- kind: ServiceAccount
+  name: argo-server
+  namespace: argo  # Replace with the namespace where the service account is located
+roleRef:
+  kind: ClusterRole  # Or "Role" if you created a Role instead of ClusterRole
+  name: argo-server-role
+  apiGroup: rbac.authorization.k8s.io
