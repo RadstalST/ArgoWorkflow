@@ -49,8 +49,8 @@ argo-init:
 	kubectl apply --recursive -f $(MANIFEST_PATH) -n $(ARGO_NAMESPACE)
 	
 
-# ## Run tests
-test:
+
+apply-manifests:
 	kubectl apply --recursive -f $(MANIFEST_PATH) -n $(ARGO_NAMESPACE)
 	
 argo-get-admin-token:
