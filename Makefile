@@ -6,11 +6,11 @@ ARGO_NAMESPACE = argo
 MANIFEST_PATH = ./kubenetes/argo-workflow/manifests/
 .PHONY: init cleanup install-kubectl kind-init kind-cleanup kind-create-cluster kind-context-cluster kind-cleanup-cluster argo-init test start
 
-
-install: init
+## Init the project without cleaning up
+init: kind-init argo-init 
 
 ## Initialize the project
-init: kind-init argo-init 
+reinit: kind-cleanup kind-init argo-init 
 
 ## Clean up the project
 uninstall: kind-cleanup
@@ -35,6 +35,7 @@ kind-create-cluster:
 ## Set KIND local cluster as the current context
 kind-context-cluster:
 	kubectl config use-context kind-$(CLUSTER_NAME)
+	
 
 ## Clean up KIND local cluster
 kind-cleanup-cluster:
@@ -43,6 +44,7 @@ kind-cleanup-cluster:
 ## Initialize Argo workflows
 argo-init:
 	kubectl create namespace $(ARGO_NAMESPACE)
+	kubectl config set-context --current --namespace=$(ARGO_NAMESPACE)
 	kubectl apply -n $(ARGO_NAMESPACE) -f https://github.com/argoproj/argo-workflows/releases/download/v$(ARGO_WORKFLOWS_VERSION)/quick-start-minimal.yaml
 	kubectl apply --recursive -f $(MANIFEST_PATH) -n $(ARGO_NAMESPACE)
 	

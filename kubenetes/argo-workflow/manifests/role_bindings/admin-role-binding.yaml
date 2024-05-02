@@ -1,11 +1,11 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: admin-binding
-  # namespace: your-namespace
+  name: admin-rolebinding
+  namespace: argo   # Adjust the namespace as needed
 subjects:
 - kind: User
-  name: your-username  # Replace with your actual username
+  name: admin
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
